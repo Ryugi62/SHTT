@@ -3,31 +3,140 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
+    <title>Fashioni - Login</title>
+    <style>
+      /* * {
+  border: 1px solid red;
+} */
+
+      html {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        outline: 0;
+      }
+
+      body {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        outline: 0;
+        display: flex;
+      }
+
+      .img-container {
+        background-color: rgba(220, 220, 220, 0.811);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 50%;
+      }
+
+      .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50%;
+      }
+
+      #login-form {
+        width: 50%;
+      }
+
+      .img-box {
+        display: flex;
+      }
+
+      .img-box img {
+        width: 50%;
+        padding-left: 25%;
+      }
+
+      .login-box {
+        margin-bottom: 10px;
+      }
+
+      .login-container input {
+        padding: 10px;
+        width: -webkit-fill-available;
+        border-radius: 4px;
+        box-shadow: 0 0 20px rgba(220, 220, 220, 0.811);
+      }
+
+      .login-container button {
+        width: -webkit-fill-available;
+        padding: 10px 15px;
+        background-color: black;
+        color: aliceblue;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      .login-box a {
+        text-decoration: none;
+        color: black;
+      }
+
+      .login-container .plus {
+        position: absolute;
+        top: 10px;
+        right: 20px;
+      }
+    </style>
   </head>
   <body>
-    <h1>Login Page</h1>
-    <form action="{% url 'login' %}" method="post">
-      {% csrf_token %}
-
-      <div>
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required />
+    <div class="img-container">
+      <div class="img-box">
+        <img src="../homepage/fish-2736523_1280.png" alt="" />
       </div>
-      <div>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required />
+      <h2>Shop with style and</h2>
+      <h2>convenience.</h2>
+      <h4>All your favorite brands and product in one place</h4>
+    </div>
+    <div class="login-container">
+      <div class="plus">
+        <h2>Fashioni</h2>
+        <h5>Discover the</h5>
       </div>
+      <form id="login-form" action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        <div class="login-box">
+          <h2>Log in</h2>
+          <h5>Username</h5>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Enter your username"
+            required
+          />
+        </div>
+        <div class="login-box">
+          <h5>Password</h5>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter your password"
+            required
+          />
+        </div>
+        <div class="login-box">
+          <button type="submit">Log in</button>
+        </div>
+        <div class="login-box">
+          <a href="#">Forgot your password?</a>
+        </div>
+      </form>
+    </div>
 
-      <button type="submit">Login</button>
-    </form>
+    {% if messages %}
+    <script type="text/javascript">
+      {% for message in messages %}
+          alert("{{ message }}");
+      {% endfor %}
+    </script>
+    {% endif %}
   </body>
-
-  {% if messages %}
-  <script type="text/javascript">
-    {% for message in messages %}
-        alert("{{ message }}");
-    {% endfor %}
-  </script>
-  {% endif %}
 </html>

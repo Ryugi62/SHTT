@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Edit Product</title>
+    <style>
+      .image-container {
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Edit Product</h2>
+    <form
+      method="post"
+      enctype="multipart/form-data"
+      style="display: flex; flex-direction: column"
+    >
+      {% csrf_token %}
+      <input type="text" name="name" value="{{ product.name }}" required />
+      <textarea name="description" required>{{ product.description }}</textarea>
+      <input type="number" name="price" value="{{ product.price }}" required />
+      <input type="number" name="stock" value="{{ product.stock }}" required />
+
+      <div>
+        <h3>Existing Images</h3>
+        {% for image in product.images.all %}
+        <div class="image-container">
+          <img
+            src="{{ image.image.url }}"
+            alt="{{ product.name }}"
+            width="100"
+          />
+          <input type="checkbox" name="delete_image_{{ image.id }}" />
+          <label>Delete Image</label>
+          <input
+            type="file"
+            name="update_image_{{ image.id }}"
+            accept="image/*"
+            style="margin-top: 10px"
+          />
+        </div>
+        {% endfor %}
+      </div>
+
+      <div>
+        <h3>Upload New Images</h3>
+        <input
+          type="file"
+          name="images"
+          accept="image/*"
+          multiple
+          style="margin-top: 10px"
+        />
+      </div>
+
+      <button type="submit" id="delete-selected-images">
+        Delete Selected Images
+      </button>
+
+      <!-- 수정 버튼을 폼 내부에 위치시키고, "Update Product" 버튼을 누를 경우 폼 데이터가 서버로 전송됩니다. -->
+      <button type="submit">Update Product</button>
+    </form>
+
+    <script>
+      document
+        .getElementById("delete-selected-images")
+        .addEventListener("click", function (event) {
+          const checkboxes = document.querySelectorAll(
+            'input[name^="delete_image_"]:checked'
+          );
+          if (checkboxes.length === 0) {
+            event.preventDefault(); // 폼 제출을 막습니다.
+            alert("Please select images to delete.");
+          } else {
+            if (!confirm("Are you sure you want to delete selected images?")) {
+              event.preventDefault(); // 사용자가 취소를 누르면 폼 제출을 막습니다.
+            }
+          }
+        });
+    </script>
+  </body>
+</html>
